@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageCropperViewController" customModule="ImageCropperTest" customModuleProvider="target">
+            <connections>
+                <outlet property="bottomBar" destination="63x-BF-RmK" id="EF4-YP-1yn"/>
+                <outlet property="btnCancel" destination="VHd-ut-ccF" id="bTR-If-Cvz"/>
+                <outlet property="btnDone" destination="0j0-Zj-OEJ" id="Ziv-i0-RfL"/>
+                <outlet property="grid" destination="Kte-m8-dND" id="bFZ-vs-SWC"/>
+                <outlet property="imgCropping" destination="r4q-OB-pAh" id="pBW-VR-81s"/>
+                <outlet property="mask" destination="exc-01-ERC" id="W21-Bd-yZm"/>
+                <outlet property="view" destination="x8u-Y6-sc7" id="KOL-LN-PDP"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="x8u-Y6-sc7">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r4q-OB-pAh">
+                    <rect key="frame" x="47" y="253" width="282" height="211"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="exc-01-ERC">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.75" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <gestureRecognizers/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kte-m8-dND">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="p8R-oB-QHK" appends="YES" id="zlr-Pa-zY6"/>
+                        <outletCollection property="gestureRecognizers" destination="LtY-eH-Qx8" appends="YES" id="u75-jP-X4M"/>
+                        <outletCollection property="gestureRecognizers" destination="Dkf-qm-xT2" appends="YES" id="ZcM-pa-6dV"/>
+                    </connections>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63x-BF-RmK">
+                    <rect key="frame" x="0.0" y="764" width="375" height="48"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VHd-ut-ccF">
+                            <rect key="frame" x="16" y="8" width="55" height="32"/>
+                            <fontDescription key="fontDescription" type="system" weight="black" pointSize="16"/>
+                            <state key="normal" title="Cancel">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="btnCancelPressed:" destination="-1" eventType="touchUpInside" id="xqd-nl-k7X"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0j0-Zj-OEJ">
+                            <rect key="frame" x="317" y="10" width="42" height="32"/>
+                            <fontDescription key="fontDescription" type="system" weight="black" pointSize="16"/>
+                            <state key="normal" title="Done">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="btnDonePressed:" destination="-1" eventType="touchUpInside" id="vX7-9V-642"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SuJ-rK-7Ui">
+                            <rect key="frame" x="1" y="0.0" width="373" height="1"/>
+                            <color key="backgroundColor" white="0.66666666669999997" alpha="0.75" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="lrM-M3-cSf"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="VHd-ut-ccF" firstAttribute="leading" secondItem="63x-BF-RmK" secondAttribute="leading" constant="16" id="6Js-Ze-JBE"/>
+                        <constraint firstAttribute="height" constant="48" id="9ef-NM-tBq"/>
+                        <constraint firstAttribute="bottom" secondItem="VHd-ut-ccF" secondAttribute="bottom" constant="8" id="EMB-Yt-v0G"/>
+                        <constraint firstItem="SuJ-rK-7Ui" firstAttribute="leading" secondItem="63x-BF-RmK" secondAttribute="leading" constant="1" id="FUQ-XN-zns"/>
+                        <constraint firstAttribute="trailing" secondItem="SuJ-rK-7Ui" secondAttribute="trailing" constant="1" id="SHE-Rw-bKZ"/>
+                        <constraint firstItem="SuJ-rK-7Ui" firstAttribute="top" secondItem="63x-BF-RmK" secondAttribute="top" id="T4z-sj-hRD"/>
+                        <constraint firstAttribute="trailing" secondItem="0j0-Zj-OEJ" secondAttribute="trailing" constant="16" id="Uky-hN-jJQ"/>
+                        <constraint firstAttribute="bottom" secondItem="0j0-Zj-OEJ" secondAttribute="bottom" constant="6" id="oi0-E3-nnM"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="63x-BF-RmK" firstAttribute="bottom" secondItem="x8u-Y6-sc7" secondAttribute="bottom" id="FMC-2I-1RG"/>
+                <constraint firstItem="exc-01-ERC" firstAttribute="leading" secondItem="x8u-Y6-sc7" secondAttribute="leading" id="Lrc-3F-SeZ"/>
+                <constraint firstItem="Kte-m8-dND" firstAttribute="top" secondItem="x8u-Y6-sc7" secondAttribute="top" id="alZ-iJ-XpH"/>
+                <constraint firstItem="63x-BF-RmK" firstAttribute="trailing" secondItem="x8u-Y6-sc7" secondAttribute="trailing" id="art-5s-hqZ"/>
+                <constraint firstItem="exc-01-ERC" firstAttribute="top" secondItem="x8u-Y6-sc7" secondAttribute="top" id="g04-5g-IUE"/>
+                <constraint firstItem="Kte-m8-dND" firstAttribute="trailing" secondItem="x8u-Y6-sc7" secondAttribute="trailing" id="i8T-ds-MrC"/>
+                <constraint firstItem="exc-01-ERC" firstAttribute="trailing" secondItem="x8u-Y6-sc7" secondAttribute="trailing" id="rKu-fi-p6q"/>
+                <constraint firstItem="Kte-m8-dND" firstAttribute="leading" secondItem="x8u-Y6-sc7" secondAttribute="leading" id="rmA-2L-6us"/>
+                <constraint firstItem="exc-01-ERC" firstAttribute="bottom" secondItem="x8u-Y6-sc7" secondAttribute="bottom" id="v17-wV-dIa"/>
+                <constraint firstItem="63x-BF-RmK" firstAttribute="leading" secondItem="x8u-Y6-sc7" secondAttribute="leading" id="vCa-aD-EKw"/>
+                <constraint firstAttribute="bottom" secondItem="Kte-m8-dND" secondAttribute="bottom" id="yzm-sy-UcQ"/>
+            </constraints>
+            <point key="canvasLocation" x="232.5" y="-78"/>
+        </view>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="p8R-oB-QHK">
+            <connections>
+                <action selector="actionPan:" destination="-1" id="eki-xo-459"/>
+            </connections>
+        </panGestureRecognizer>
+        <pinchGestureRecognizer id="LtY-eH-Qx8">
+            <connections>
+                <action selector="actionPinch:" destination="-1" id="vcj-zx-as8"/>
+            </connections>
+        </pinchGestureRecognizer>
+        <tapGestureRecognizer numberOfTapsRequired="2" id="Dkf-qm-xT2">
+            <connections>
+                <action selector="actionDoubleTap:" destination="-1" id="lRR-gg-p6i"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+</document>

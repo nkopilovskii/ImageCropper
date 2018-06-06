@@ -1,28 +1,109 @@
 # ImageCropper
 
-[![CI Status](https://img.shields.io/travis/Nick Kopilovskii/ImageCropper.svg?style=flat)](https://travis-ci.org/Nick Kopilovskii/ImageCropper)
-[![Version](https://img.shields.io/cocoapods/v/ImageCropper.svg?style=flat)](https://cocoapods.org/pods/ImageCropper)
-[![License](https://img.shields.io/cocoapods/l/ImageCropper.svg?style=flat)](https://cocoapods.org/pods/ImageCropper)
-[![Platform](https://img.shields.io/cocoapods/p/ImageCropper.svg?style=flat)](https://cocoapods.org/pods/ImageCropper)
+![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://mit-license.org)
+[![Platform](http://img.shields.io/badge/platform-ios-lightgrey.svg?style=flat)](https://developer.apple.com/resources/)
+
+## Info
+Basis on [MVP + Clean Architecture] (https://github.com/FortechRomania/ios-mvp-clean-architecture/)
+Created with  [Generatus] (https://github.com/Ryasnoy/Generatus)
+
+## Description
+Module for implementing the process of cropping images
+
+In the process of creating a variety of projects, developers often face the need to crop images (whether the user's avatar on the social network, background images, and so on).
+
+Of course, iOS provides its own tools for image processing using the `Photos` application, but its use is not always convenient, justified, or even possible.
+
+This library provides the ability to cut out sections of the original image in specified proportions by user's gesture interactions.
+
+This module developed on the basis of [MVP + Clean Architecture] (https://github.com/FortechRomania/ios-mvp-clean-architecture/) by code generator [Generatus] (https://github.com/Ryasnoy/Generatus)
 
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
+## Interface
+
+### ImageCropperCompletion
+`public typealias ImageCropperCompletion = (UIImage?) -> Void` - closure which is performed upon completion of the image cropping
+
+### ImageCropperConfiguration
+`ImageCropperFigureType` - figure types for cropping:
+    - `circle` - circle
+    - `square` - square (rectangle with aspect ratio 1 to 1)
+    - `rect2x1` - square (rectangle with aspect ratio* 2 to 1)
+    - `rect1x2` - square (rectangle with aspect ratio* 1 to 2)
+    - `rect4x3` - square (rectangle with aspect ratio* 4 to 3)
+    - `rect3x4` - square (rectangle with aspect ratio* 3 to 4)
+    - `rect16x9` - square (rectangle with aspect ratio* 16 to 9)
+    - `rect9x19` - square (rectangle with aspect ratio* 9 to 16)
+    *(first number is width, second - height) 
+
+#### Сustom parameters
+`maskFillColor` - fill color around cropped figure ("hole")
+`borderColor` - color of cropped figure's ("hole") border
+`showGrid` - specifies whether to display the grid
+`gridColor` - color of grid's lines
+`doneTitle` - title text of button for finishing cropping process (default: `Done`)
+`cancelTitle` - itle text of button for canceling cropping process (default: `Cancel`)
+
+## Usage Example
+
+### Module Initialization
+Set the configuration:
+```
+var config = ImageCropperConfiguration(with: img, and: figure)
+config.maskFillColor = UIColor(displayP3Red: 0.7, green: 0.5, blue: 0.2, alpha: 0.75)
+config.borderColor = UIColor.black
+
+config.showGrid = true
+config.gridColor = UIColor.white
+config.doneTitle = "CROP"
+config.cancelTitle = "Back"
+```
+
+Initialize view controller:
+```
+let cropper = ImageCropperViewController.initialize(with: config) { croppedImage in
+  /*
+    Code to perform after finishing cropping process
+  */
+}
+```
+
+Display with Navigation Controller:
+```
+navigationController.pushViewController(cropper, animated: true)
+```
+
+Present Modally:
+```
+viewController.present(cropper, animated: true, completion: nil)
+```
+
+### User interection
+`UIPanGestureRecognizer` - gesture for draging image below mask and grid
+`UIPinchGestureRecognizer` - gesture for scaling image
+`UITapGestureRecognizer` - double tap for centering and transforming image to the initial frame
+
+
 ## Requirements
+- iOS 11.0+
+- Xcode 9.0
 
 ## Installation
 
 ImageCropper is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
-```ruby
+```
 pod 'ImageCropper'
 ```
 
 ## Author
 
-Nick Kopilovskii, nikolay.k@powercode.us
+Nick Kopilovskii, nkopilovskii@gmail.com
 
 ## License
 

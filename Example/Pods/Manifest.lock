@@ -1,0 +1,16 @@
+PODS:
+  - ImageCropper (0.1.0)
+
+DEPENDENCIES:
+  - ImageCropper (from `../`)
+
+EXTERNAL SOURCES:
+  ImageCropper:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ImageCropper: bde52776636ca74b7122e7d9463c1f07201bce75
+
+PODFILE CHECKSUM: 0b27b12d38bbf516eea81f58555c7e5071912ba5
+
+COCOAPODS: 1.5.0
