@@ -18,10 +18,6 @@ Of course, iOS provides its own tools for image processing using the `Photos` ap
 This library provides the ability to cut out sections of the original image in specified proportions by user's gesture interactions.
 
 
-## Example
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
 ## Interface
 
 ### ImageCropperCompletion
@@ -43,7 +39,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 - `rect16x9` - square (rectangle with aspect ratio* 16 to 9)
 
-- `rect9x19` - square (rectangle with aspect ratio* 9 to 16)
+- `rect9x16` - square (rectangle with aspect ratio* 9 to 16)
 
 *(first number is width, second - height) 
 
@@ -63,7 +59,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ## Usage Example
 
 ### Module Initialization
-Set the configuration:
+Set configuration:
 ```
 var config = ImageCropperConfiguration(with: img, and: figure)
 config.maskFillColor = UIColor(displayP3Red: 0.7, green: 0.5, blue: 0.2, alpha: 0.75)
