@@ -17,7 +17,6 @@ Of course, iOS provides its own tools for image processing using the `Photos` ap
 
 This library provides the ability to cut out sections of the original image in specified proportions by user's gesture interactions.
 
-This module developed on the basis of [MVP + Clean Architecture] (https://github.com/FortechRomania/ios-mvp-clean-architecture/) by code generator [Generatus] (https://github.com/Ryasnoy/Generatus)
 
 ## Example
 
@@ -30,22 +29,35 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ### ImageCropperConfiguration
 `ImageCropperFigureType` - figure types for cropping:
-    - `circle` - circle
-    - `square` - square (rectangle with aspect ratio 1 to 1)
-    - `rect2x1` - square (rectangle with aspect ratio* 2 to 1)
-    - `rect1x2` - square (rectangle with aspect ratio* 1 to 2)
-    - `rect4x3` - square (rectangle with aspect ratio* 4 to 3)
-    - `rect3x4` - square (rectangle with aspect ratio* 3 to 4)
-    - `rect16x9` - square (rectangle with aspect ratio* 16 to 9)
-    - `rect9x19` - square (rectangle with aspect ratio* 9 to 16)
-    *(first number is width, second - height) 
+- `circle` - circle
+
+- `square` - square (rectangle with aspect ratio 1 to 1)
+
+- `rect2x1` - square (rectangle with aspect ratio* 2 to 1)
+
+- `rect1x2` - square (rectangle with aspect ratio* 1 to 2)
+
+- `rect4x3` - square (rectangle with aspect ratio* 4 to 3)
+
+- `rect3x4` - square (rectangle with aspect ratio* 3 to 4)
+
+- `rect16x9` - square (rectangle with aspect ratio* 16 to 9)
+
+- `rect9x19` - square (rectangle with aspect ratio* 9 to 16)
+
+*(first number is width, second - height) 
 
 #### Сustom parameters
 `maskFillColor` - fill color around cropped figure ("hole")
+
 `borderColor` - color of cropped figure's ("hole") border
+
 `showGrid` - specifies whether to display the grid
+
 `gridColor` - color of grid's lines
+
 `doneTitle` - title text of button for finishing cropping process (default: `Done`)
+
 `cancelTitle` - itle text of button for canceling cropping process (default: `Cancel`)
 
 ## Usage Example
@@ -82,11 +94,25 @@ Present Modally:
 viewController.present(cropper, animated: true, completion: nil)
 ```
 
-### User interection
+### User interaction
 `UIPanGestureRecognizer` - gesture for draging image below mask and grid
+
 `UIPinchGestureRecognizer` - gesture for scaling image
+
 `UITapGestureRecognizer` - double tap for centering and transforming image to the initial frame
 
+### Suported Screen Orientation
+####iPhone Portrait
+![](https://github.com/nkopilovskii/ImageCropper/tree/master/Example/ImageCropper/iPhone_Portrait.png)
+
+####iPhone Landscape
+![](https://github.com/nkopilovskii/ImageCropper/tree/master/Example/ImageCropper/iPhone_Landscape.png)
+
+####iPad Portrait
+![](https://github.com/nkopilovskii/ImageCropper/tree/master/Example/ImageCropper/iPad_Portrait.png)
+
+####iPad Landscape
+![](https://github.com/nkopilovskii/ImageCropper/tree/master/Example/ImageCropper/iPad_Landscape.png)
 
 ## Requirements
 - iOS 11.0+
