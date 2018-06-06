@@ -104,19 +104,19 @@ viewController.present(cropper, animated: true, completion: nil)
 ### Suported Screen Orientation
 iPhone Portrait
 
-![](https://github.com/nkopilovskii/ImageCropper/tree/master/Example/ImageCropper/iPhone_Portrait.png)
+![](https://github.com/nkopilovskii/ImageCropper/blob/master/Example/ImageCropper/iPhone_Portrait.png)
 
 iPhone Landscape
 
-![](https://github.com/nkopilovskii/ImageCropper/tree/master/Example/ImageCropper/iPhone_Landscape.png)
+![](https://github.com/nkopilovskii/ImageCropper/blob/master/Example/ImageCropper/iPhone_Landscape.png)
 
 iPad Portrait
 
-![](https://github.com/nkopilovskii/ImageCropper/tree/master/Example/ImageCropper/iPad_Portrait.png)
+![](https://github.com/nkopilovskii/ImageCropper/blob/master/Example/ImageCropper/iPad_Portrait.png)
 
 iPad Landscape
 
-![](https://github.com/nkopilovskii/ImageCropper/tree/master/Example/ImageCropper/iPad_Landscape.png)
+![](https://github.com/nkopilovskii/ImageCropper/blob/master/Example/ImageCropper/iPhone_Landscape.png)
 
 ## Requirements
 - iOS 11.0+
