@@ -11,28 +11,40 @@ class ImageCropperRouterImplementation {
 
   fileprivate weak var view: ImageCropperViewController?
   fileprivate var completionHandler: ImageCropperCompletion
+  fileprivate var dismiss: ImageCropperDismiss?
   
   init(for view: ImageCropperViewController, with completionHandler: @escaping ImageCropperCompletion) {
     self.view = view
     self.completionHandler = completionHandler
   }
 
+  
+  init(for view: ImageCropperViewController, with completionHandler: @escaping ImageCropperCompletion, dismiss: @escaping ImageCropperDismiss) {
+    self.view = view
+    self.completionHandler = completionHandler
+    self.dismiss = dismiss
+  }
 }
 
 //MARK: - ImageCropperRouter
 
 extension ImageCropperRouterImplementation: ImageCropperRouter {
   func finish(with croppedImage: UIImage) {
-    completionHandler(croppedImage)
+    self.completionHandler(croppedImage)
+    if let dis = dismiss {  dis() }
   }
   
   func cancel() {
-    guard let navigationController = view?.navigationController else {
-      view?.dismiss(animated: true, completion: nil)
+    guard let dis = dismiss else {
+      guard let navigationController = view?.navigationController else {
+        view?.dismiss(animated: true, completion: nil)
+        return
+      }
+      navigationController.popViewController(animated: true)
       return
     }
     
-    navigationController.popViewController(animated: true)
+    dis()
   }
   
   

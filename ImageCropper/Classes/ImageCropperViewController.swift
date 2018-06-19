@@ -12,12 +12,20 @@ import UIKit
 public class ImageCropperViewController: UIViewController {
   //MARK: Static initializer
   static public func initialize(with configuration:ImageCropperConfiguration, completionHandler: @escaping ImageCropperCompletion) -> ImageCropperViewController {
-//    let bundle = Bundle(for: self.classForCoder()).loadNibNamed("ImageCropper", owner: nil, options: nil)?.first
     let cropper = ImageCropperViewController(nibName: "ImageCropper", bundle: Bundle(for: self.classForCoder()))
     ImageCropperConfiguratorImplementation.configure(for: cropper, with: configuration, completionHandler: completionHandler)
   
     return cropper
   }
+  
+  static public func initialize(with configuration:ImageCropperConfiguration, completionHandler: @escaping ImageCropperCompletion, dismiss: @escaping ImageCropperDismiss) -> ImageCropperViewController {
+    
+    let cropper = ImageCropperViewController(nibName: "ImageCropper", bundle: Bundle(for: self.classForCoder()))
+    ImageCropperConfiguratorImplementation.configure(for: cropper, with: configuration, completionHandler: completionHandler, dismiss: dismiss)
+    
+    return cropper
+  }
+  
 
   //MARK: Private properties & IBOutlets
   @IBOutlet fileprivate weak var imgCropping: UIImageView!
@@ -43,9 +51,9 @@ public class ImageCropperViewController: UIViewController {
     presenter?.viewDidLayoutSubviews(in: view.bounds)
   }
   
-  override public var prefersStatusBarHidden: Bool {
-    return true
-  }
+//  override public var prefersStatusBarHidden: Bool {
+//    return true
+//  }
   
 }
 
@@ -175,6 +183,37 @@ extension ImageCropperViewController: ImageCropperView {
       self.bottomBar.alpha = CGFloat(alpha)
     }
   }
+  
+  
+  func setBackButton(title: String?, image: UIImage?, tintColor: UIColor?) {
+//    guard navigationController != nil else { return }
+//    let backItem = UIBarButtonItem()
+    guard let bar = self.navigationController?.navigationBar, let backItem = bar.backItem else { return }
+    backItem.title = title
+    bar.backIndicatorImage = image
+    bar.backIndicatorTransitionMaskImage = image
+    bar.tintColor = tintColor ??  bar.tintColor
+  }
+  
+  
+//  func setBack(title: String?) {
+//    guard  let back = navigationItem.backBarButtonItem else { return }
+//    guard let backTitle = title else { return }
+//    back.title = backTitle
+//    
+//  }
+//  
+//  func setBack(image: UIImage?) {
+//    guard let nc = navigationController, let back = nc.navigationBar.backItem?.backBarButtonItem else { return }
+//    guard let backImage = image else { return }
+//    back.image = backImage
+//  }
+//  
+//  func setBack(tintColor: UIColor?) {
+//    guard let nc = navigationController, let back = nc.navigationBar.backItem?.backBarButtonItem else { return }
+//    guard let backTintColor = tintColor else { return }
+//    back.tintColor = backTintColor
+//  }
   
 }
 

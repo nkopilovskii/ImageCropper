@@ -37,7 +37,7 @@ extension ImageCropperModelImplementation: ImageCropperModel {
     set {
       parentRect = newValue
       
-      let figureSize = configuration.figure.maskSize(with: newValue.size)
+      let figureSize = configuration.figure.maskSize(with: newValue.size, ratio: configuration.customRatio)
       figureFrame = CGRect(x: (newValue.width - figureSize.width) / 2, y: (newValue.height - figureSize.height) / 2, width: figureSize.width, height: figureSize.height)
       
       imageFrame = imageInitialFrame
@@ -188,6 +188,18 @@ extension ImageCropperModelImplementation: ImageCropperModel {
     return configuration.cancelTitle
   }
   
+  var backTitle: String? {
+    return configuration.backTitle
+  }
+  
+  var backImage: UIImage? {
+    return configuration.backImage
+  }
+  
+  var backTintColor: UIColor? {
+    return configuration.backTintColor
+  }
+  
   func draggingFrame(for point: CGPoint) -> CGRect {
     let previousLocation = panLastLocation ?? point
     let difference = CGPoint(x: point.x - previousLocation.x, y: point.y - previousLocation.y)
@@ -303,7 +315,7 @@ extension CGRect {
 }
 
 extension ImageCropperConfiguration.ImageCropperFigureType {
-  fileprivate func maskSize(with parentSize:CGSize) -> CGSize {
+  fileprivate func maskSize(with parentSize:CGSize, ratio: CGSize?) -> CGSize {
     let parentVertical = parentSize.width < parentSize.height
     var width: CGFloat, height: CGFloat
     switch self {
@@ -328,6 +340,20 @@ extension ImageCropperConfiguration.ImageCropperFigureType {
     case .rect9x16:
       height = parentSize.height * 0.7
       width = height * 9 / 16
+    case .customRect:
+      let customRatio = ratio ?? CGSize(width: 1, height: 1) //else { return ImageCropperConfiguration.ImageCropperFigureType.square.maskSize(with:parentSize) }
+      if customRatio.width > customRatio.height {
+        width = parentVertical ? parentSize.width * 0.8 : parentSize.width * 0.6
+        height = width * customRatio.height / customRatio.width
+      }
+      else if customRatio.width < customRatio.height {
+        height = parentSize.height * 0.7
+        width = height * customRatio.width / customRatio.height
+      }
+      else {
+        return ImageCropperConfiguration.ImageCropperFigureType.square.maskSize(with:parentSize, ratio: customRatio)
+      }
+//      fatalError()
     }
     
     return CGSize(width: width, height: height)
@@ -347,6 +373,14 @@ extension ImageCropperConfiguration.ImageCropperFigureType {
       return 16
     case .rect9x16:
       return 9
+    case .customRect:
+      return 0
+//      fatalError()
     }
   }
 }
+
+
+//extension ImageCropperConfiguration.ImageCropperFigureType where Self.rawValue == ImageCropperConfiguration.ImageCropperFigureType.custom  {
+//
+//}

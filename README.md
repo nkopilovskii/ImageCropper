@@ -6,6 +6,7 @@
 
 ## Info
 Basis on [MVP + Clean Architecture] (https://github.com/FortechRomania/ios-mvp-clean-architecture/)
+
 Created with  [Generatus] (https://github.com/Ryasnoy/Generatus)
 
 ## Description
@@ -41,9 +42,13 @@ This library provides the ability to cut out sections of the original image in s
 
 - `rect9x16` - square (rectangle with aspect ratio* 9 to 16)
 
+- `customRect` - square (rectangle with custom aspect ratio)
+
 *(first number is width, second - height) 
 
 #### Сustom parameters
+`customRatio` - size for creating  figure with custom aspect ratio. Value of this property will be used only if `figure = .customRect`. Default value - `CGSize(width: 1, height: 1)`
+
 `maskFillColor` - fill color around cropped figure ("hole")
 
 `borderColor` - color of cropped figure's ("hole") border
@@ -76,6 +81,18 @@ Initialize view controller:
 let cropper = ImageCropperViewController.initialize(with: config) { croppedImage in
   /*
     Code to perform after finishing cropping process
+  */
+}
+```
+or
+```
+let cropper = ImageCropperViewController.initialize(with: config, completionHandler: { _croppedImage in
+  /*
+  Code to perform after finishing cropping process
+  */
+}) {
+  /*
+  Code to perform after dismissing controller
   */
 }
 ```

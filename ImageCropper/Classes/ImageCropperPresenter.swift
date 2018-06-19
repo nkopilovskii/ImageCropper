@@ -22,6 +22,8 @@ protocol ImageCropperView: class {
   func setDone(_ title: String?)
   func setCancel(_ title: String?)
   func showBottomButtons(_ show: Bool)
+  
+  func setBackButton(title: String?, image: UIImage?, tintColor: UIColor?)
 }
 
 protocol ImageCropperPresenter {
@@ -59,6 +61,10 @@ protocol ImageCropperModel {
   
   var doneTitle: String? { get }
   var cancelTitle: String? { get }
+  
+  var backTitle: String? { get }
+  var backImage: UIImage? { get }
+  var backTintColor: UIColor? { get }
   
   func draggingFrame(for point: CGPoint) -> CGRect
   func scalingFrame(for scale: CGFloat) -> CGRect
@@ -107,6 +113,8 @@ extension ImageCropperPresenterImplementation: ImageCropperPresenter {
     view?.drawGrid(with: model.grid, with: model.gridColor)
     view?.setDone(model.doneTitle)
     view?.setCancel(model.cancelTitle)
+    
+    view?.setBackButton(title: model.backTitle, image: model.backImage, tintColor: model.backTintColor)
   }
   
   func userInteraction(_ takesPlace: Bool) {

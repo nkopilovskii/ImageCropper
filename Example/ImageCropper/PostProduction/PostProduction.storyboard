@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Jfa-QU-WzI">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Post Production View Controller-->
+        <scene sceneID="KnA-hv-4Zm">
+            <objects>
+                <viewController id="Jfa-QU-WzI" customClass="PostProductionViewController" customModule="ImageCropperTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TDH-VI-RSA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bIQ-4s-BDd">
+                                <rect key="frame" x="16" y="36" width="343" height="545"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EBR-QC-FBu">
+                                <rect key="frame" x="16" y="617" width="34" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="ad6-dR-eBz"/>
+                                </constraints>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="btnBackPressed:" destination="Jfa-QU-WzI" eventType="touchUpInside" id="CF6-jz-EyP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SYd-cf-5Ob">
+                                <rect key="frame" x="322" y="617" width="37" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="15h-VO-AZL"/>
+                                    <constraint firstAttribute="height" constant="30" id="qaa-Yx-DI8"/>
+                                </constraints>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="btnDonePressed:" destination="Jfa-QU-WzI" eventType="touchUpInside" id="o35-2B-W3v"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="EBR-QC-FBu" firstAttribute="top" secondItem="bIQ-4s-BDd" secondAttribute="bottom" constant="36" id="1Ek-95-fGP"/>
+                            <constraint firstItem="yao-mI-hjF" firstAttribute="bottom" secondItem="SYd-cf-5Ob" secondAttribute="bottom" constant="20" id="DMv-EL-Ev0"/>
+                            <constraint firstItem="EBR-QC-FBu" firstAttribute="leading" secondItem="yao-mI-hjF" secondAttribute="leading" constant="16" id="Gz9-cg-Zr0"/>
+                            <constraint firstItem="yao-mI-hjF" firstAttribute="trailing" secondItem="SYd-cf-5Ob" secondAttribute="trailing" constant="16" id="Jcu-SH-VN4"/>
+                            <constraint firstItem="bIQ-4s-BDd" firstAttribute="leading" secondItem="yao-mI-hjF" secondAttribute="leading" constant="16" id="TVd-Ir-1TB"/>
+                            <constraint firstItem="yao-mI-hjF" firstAttribute="trailing" secondItem="bIQ-4s-BDd" secondAttribute="trailing" constant="16" id="Xlr-27-fuy"/>
+                            <constraint firstItem="yao-mI-hjF" firstAttribute="bottom" secondItem="EBR-QC-FBu" secondAttribute="bottom" constant="20" id="eoR-ut-JJS"/>
+                            <constraint firstItem="bIQ-4s-BDd" firstAttribute="top" secondItem="yao-mI-hjF" secondAttribute="top" constant="16" id="pIk-hb-iYT"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="yao-mI-hjF"/>
+                    </view>
+                    <connections>
+                        <outlet property="imgResult" destination="bIQ-4s-BDd" id="vYI-ib-gxR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jRg-B6-fSP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-114.40000000000001" y="82.3088455772114"/>
+        </scene>
+    </scenes>
+</document>
