@@ -23,6 +23,12 @@ class PostProductionViewController: UIViewController {
     PostProductionConfiguratorImplementation.configure(for: self)
     presenter?.viewDidLoad()
     imgResult.image = image
+    
+    guard let width = image?.size.width, let height = image?.size.height else { return }
+    let constraint = NSLayoutConstraint(item: imgResult, attribute: .width, relatedBy: .equal, toItem: imgResult, attribute: .height, multiplier: width / height, constant: 0)
+    imgResult.addConstraint(constraint)
+    imgResult.layer.borderWidth = 1
+    imgResult.layer.borderColor = UIColor.black.cgColor
   }
 
   @IBAction func btnBackPressed(_ sender: Any) {

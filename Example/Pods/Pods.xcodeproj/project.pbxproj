@@ -14,6 +14,7 @@
 		1B11E5D420C8085400AED669 /* ImageCropperRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B11E5CD20C8085400AED669 /* ImageCropperRouter.swift */; };
 		1B11E5D520C8085400AED669 /* ImageCropperModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B11E5CE20C8085400AED669 /* ImageCropperModel.swift */; };
 		1B11E5D820C80F3000AED669 /* ImageCropper.xib in Sources */ = {isa = PBXBuildFile; fileRef = 1B11E5CF20C8085400AED669 /* ImageCropper.xib */; };
+		1B6894D32109C18A00BA1C7B /* UIImage+NormalizeOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6894D22109C18A00BA1C7B /* UIImage+NormalizeOrientation.swift */; };
 		3C9EF8FE9DF5ABE2A67D4FAB8E5C73E2 /* Pods-ImageCropper_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 54C911D9AE9CECF0453E2B3717B83862 /* Pods-ImageCropper_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6CDBD84ACC2A8592AACF64A1335C1986 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		77D462486ABEE04BDFE533A68EAC5672 /* Pods-ImageCropper_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC7F1BB619DB596E811E37B3AD34EDE /* Pods-ImageCropper_Example-dummy.m */; };
@@ -53,6 +54,7 @@
 		1B11E5CD20C8085400AED669 /* ImageCropperRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCropperRouter.swift; path = ImageCropper/Classes/ImageCropperRouter.swift; sourceTree = "<group>"; };
 		1B11E5CE20C8085400AED669 /* ImageCropperModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCropperModel.swift; path = ImageCropper/Classes/ImageCropperModel.swift; sourceTree = "<group>"; };
 		1B11E5CF20C8085400AED669 /* ImageCropper.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ImageCropper.xib; path = ImageCropper/Classes/ImageCropper.xib; sourceTree = "<group>"; };
+		1B6894D22109C18A00BA1C7B /* UIImage+NormalizeOrientation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+NormalizeOrientation.swift"; path = "ImageCropper/Classes/UIImage+NormalizeOrientation.swift"; sourceTree = "<group>"; };
 		2500DFF7B30A7FADB49E7F266D6AA265 /* Pods-ImageCropper_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ImageCropper_Example-frameworks.sh"; sourceTree = "<group>"; };
 		267BFFF4600ADC26E82DBCA7CED87616 /* Pods_ImageCropper_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImageCropper_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2928E6F2EEA9944F153CF90493F019B7 /* Pods-ImageCropper_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ImageCropper_Example-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				1B11E5C920C8085400AED669 /* ImageCropperPresenter.swift */,
 				1B11E5CD20C8085400AED669 /* ImageCropperRouter.swift */,
 				1B11E5CB20C8085400AED669 /* ImageCropperViewController.swift */,
+				1B6894D22109C18A00BA1C7B /* UIImage+NormalizeOrientation.swift */,
 				B882C54C493F9A160FC0E1E935B55249 /* Pod */,
 				85F03A62B0379012F90818BBC61F1978 /* Support Files */,
 			);
@@ -374,6 +377,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B6894D32109C18A00BA1C7B /* UIImage+NormalizeOrientation.swift in Sources */,
 				1B11E5D820C80F3000AED669 /* ImageCropper.xib in Sources */,
 				1B11E5D520C8085400AED669 /* ImageCropperModel.swift in Sources */,
 				1B11E5D220C8085400AED669 /* ImageCropperViewController.swift in Sources */,

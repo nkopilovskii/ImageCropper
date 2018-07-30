@@ -42,7 +42,7 @@ public struct ImageCropperConfiguration {
   
   
   public init(with image: UIImage, and figure: ImageCropperFigureType) {
-    self.image = image
+    self.image = image.normalizeOrientation()
     self.figure = figure
   }
   

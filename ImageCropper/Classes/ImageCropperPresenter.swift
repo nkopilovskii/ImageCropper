@@ -24,6 +24,8 @@ protocol ImageCropperView: class {
   func showBottomButtons(_ show: Bool)
   
   func setBackButton(title: String?, image: UIImage?, tintColor: UIColor?)
+  
+  func activityIndicator(_ show: Bool)
 }
 
 protocol ImageCropperPresenter {
@@ -135,7 +137,15 @@ extension ImageCropperPresenterImplementation: ImageCropperPresenter {
   }
   
   func crop() {
-    router.finish(with: model.crop())
+    view?.activityIndicator(true)
+    DispatchQueue.global(qos: .userInitiated).async {
+      let image = self.model.crop()
+      // Bounce back to the main thread to update the UI
+      DispatchQueue.main.async {
+        self.view?.activityIndicator(false)
+        self.router.finish(with: image)
+      }
+    }
   }
   
   func cancel() {

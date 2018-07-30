@@ -35,9 +35,12 @@ public class ImageCropperViewController: UIViewController {
   @IBOutlet fileprivate weak var btnCancel: UIButton!
   @IBOutlet fileprivate weak var bottomBar: UIView!
   
+  @IBOutlet fileprivate weak var activityView: UIView!
+  @IBOutlet fileprivate weak var activity: UIActivityIndicatorView!
+  
   var presenter: ImageCropperPresenter?
 
-  
+  fileprivate var pinchStartDistance: CGFloat = 0
   
   
   //MARK:  Lifecicle
@@ -85,28 +88,44 @@ extension ImageCropperViewController {
   }
   
   @IBAction func actionPinch(_ sender: UIPinchGestureRecognizer) {
+    
     switch sender.state {
     case .began:
+      guard sender.numberOfTouches >= 2 else { return }
       presenter?.userInteraction(true)
       
+      pinchStartDistance = distance(from: sender.location(ofTouch: 0, in: grid), to: sender.location(ofTouch: 1, in: grid))
     case .changed:
-      presenter?.didScale(with: sender.scale)
+      guard sender.numberOfTouches >= 2 else { return }
+      let realDistance = distance(from: sender.location(ofTouch: 0, in: grid), to: sender.location(ofTouch: 1, in: grid))
+      let scaleDistance = (realDistance - pinchStartDistance) / 10 + pinchStartDistance
+      presenter?.didScale(with: scaleDistance / pinchStartDistance)
       
-    case .ended:
+    case .ended, .cancelled:
       presenter?.userInteraction(false)
     default:
       return
     }
   }
   
+  @IBAction func actionGesture(_ sender: UITapGestureRecognizer) {
+    
+  }
+  
   @IBAction func actionDoubleTap(_ sender: UITapGestureRecognizer) {
     presenter?.centerImage()
+  }
+  
+  func distance(from first: CGPoint, to second: CGPoint) -> CGFloat {
+    
+    return sqrt(pow(first.x - second.x, 2) + pow(first.y - second.y, 2))
   }
 }
 
 //MARK: - ImageCropperView
 
 extension ImageCropperViewController: ImageCropperView {
+  
   func set(_ image: UIImage) {
     imgCropping.image = image
   }
@@ -186,8 +205,6 @@ extension ImageCropperViewController: ImageCropperView {
   
   
   func setBackButton(title: String?, image: UIImage?, tintColor: UIColor?) {
-//    guard navigationController != nil else { return }
-//    let backItem = UIBarButtonItem()
     guard let bar = self.navigationController?.navigationBar, let backItem = bar.backItem else { return }
     backItem.title = title
     bar.backIndicatorImage = image
@@ -195,6 +212,10 @@ extension ImageCropperViewController: ImageCropperView {
     bar.tintColor = tintColor ??  bar.tintColor
   }
   
+  
+  func activityIndicator(_ show: Bool) {
+    activityView.isHidden = !show
+  }
   
 //  func setBack(title: String?) {
 //    guard  let back = navigationItem.backBarButtonItem else { return }

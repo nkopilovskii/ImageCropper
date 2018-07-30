@@ -13,9 +13,7 @@ class ImageCropperModelImplementation  {
   
   fileprivate var figureFrame: CGRect?
   fileprivate var panLastLocation: CGPoint?
-  fileprivate var pinchLastScale: CGFloat?
   fileprivate var imageFrame = CGRect.zero
-  fileprivate var imageScalingLastFrame: CGRect?
   fileprivate var gridSize:CGFloat?
   
   init(with configuration: ImageCropperConfiguration) {
@@ -45,35 +43,10 @@ extension ImageCropperModelImplementation: ImageCropperModel {
   }
   
   var imageInitialFrame: CGRect {
-    var width: CGFloat, height: CGFloat
-    
-    if image.size.width > image.size.height {
-      width = parentFrame.width * 0.95
-      height = width * image.size.height / image.size.width
-      
-      if let borderHeight = figureFrame?.height, (height - borderHeight) < 25 {
-        height = borderHeight * 1.25
-        width = height * image.size.width / image.size.height
-      }
-    }
-    else if image.size.width < image.size.height {
-      height = parentFrame.height * 0.8
-      width = height * image.size.width / image.size.height
-      
-      if let borderWidth = figureFrame?.width, (width - borderWidth) < 25 {
-        width = borderWidth * 1.25
-        height = width * image.size.height / image.size.width
-      }
-    }
-    
-    else if image.size.width == image.size.height {
-      width = parentFrame.width * 0.95
-      height = width
-    } else {
-      return .zero
-    }
-    
-    return CGRect(x: (parentFrame.width - width) / 2, y: (parentFrame.height - height) / 2, width: width, height: height)
+    let figureSize = figureFrame?.size ?? .zero
+    var size = image.size.scale(to: figureSize)
+    size = CGSize(width: size.width * 1.25, height: size.height * 1.25)
+    return CGRect(x: (parentFrame.width - size.width) / 2, y: (parentFrame.height - size.height) / 2, width: size.width, height: size.height)
   }
   
   var mask: CGPath {
@@ -204,9 +177,7 @@ extension ImageCropperModelImplementation: ImageCropperModel {
     let previousLocation = panLastLocation ?? point
     let difference = CGPoint(x: point.x - previousLocation.x, y: point.y - previousLocation.y)
     
-    guard let borders = figureFrame else {
-      return imageFrame
-    }
+    guard let borders = figureFrame else { return imageFrame }
     
     let x = imageFrame.origin.x + difference.x
     let newX = x < borders.origin.x && x + imageFrame.width > borders.maxX ? x : imageFrame.origin.x
@@ -215,20 +186,20 @@ extension ImageCropperModelImplementation: ImageCropperModel {
     let newY = y < borders.origin.y && y + imageFrame.height > borders.maxY ? y : imageFrame.origin.y
     
     imageFrame = CGRect(origin: CGPoint(x: newX, y: newY), size: imageFrame.size)
-    panLastLocation = imageFrame.contains(borders) ? point : panLastLocation
-
+    panLastLocation = point
     return imageFrame
   }
   
   func scalingFrame(for scale: CGFloat) -> CGRect {
-    let lastFrame = imageScalingLastFrame ?? imageFrame
-    let newSize = CGSize(width: lastFrame.width * scale, height: lastFrame.height * scale)
-  
-    guard let borders = figureFrame, newSize.width >= borders.width, newSize.height >= borders.height   else {
-      return imageFrame
+    let borders = figureFrame ?? .zero
+    var newSize = CGSize(width: imageFrame.width * scale, height: imageFrame.height * scale)
+    
+    if newSize.width < borders.width || newSize.height < borders.height {
+        newSize = image.size.scale(to: borders.size)
     }
-    var newX = lastFrame.origin.x - (newSize.width - lastFrame.width) / 2
-    var newY = lastFrame.origin.y - (newSize.height - lastFrame.height) / 2
+    
+    var newX = imageFrame.origin.x - (newSize.width - imageFrame.width) / 2
+    var newY = imageFrame.origin.y - (newSize.height - imageFrame.height) / 2
    
     if newX + newSize.width <= borders.maxX {
       newX = borders.maxX - newSize.width
@@ -243,16 +214,16 @@ extension ImageCropperModelImplementation: ImageCropperModel {
     else if newY >= borders.origin.y {
       newY = borders.origin.y
     }
-
-    imageFrame = CGRect(origin: CGPoint(x: newX, y: newY), size: newSize)
+    
+    if newSize.width / image.size.width < 2 || newSize.height / image.size.height < 2  {
+      imageFrame = CGRect(origin: CGPoint(x: newX, y: newY), size: newSize)
+    }
 
     return imageFrame
   }
   
   func transformatingFinished() {
-    imageScalingLastFrame = nil
     panLastLocation = nil
-    
   }
   
   func centerFrame() -> CGRect {
@@ -267,38 +238,38 @@ extension ImageCropperModelImplementation: ImageCropperModel {
   }
   
   func crop() -> UIImage {
-    guard let bounds = parentRect, let borders = figureFrame else {
+    guard let borders = figureFrame else {
       return image
     }
-    
-    let frame = CGRect(origin: CGPoint(x: borders.origin.x - imageFrame.origin.x, y: borders.origin.y - imageFrame.origin.y), size: borders.size)
+    let point = CGPoint(x: borders.origin.x - imageFrame.origin.x, y: borders.origin.y - imageFrame.origin.y)
+    let frame = CGRect(origin: point, size: borders.size)
     let x = frame.origin.x * image.size.width / imageFrame.width
     let y = frame.origin.y * image.size.height / imageFrame.height
     let width = frame.width * image.size.width / imageFrame.width
     let height = frame.height * image.size.height / imageFrame.height
     let croppedRect = CGRect(x: x, y: y, width: width, height: height)
-    
     guard let imageRef = image.cgImage?.cropping(to: croppedRect) else {
       return image
     }
     
-    UIGraphicsBeginImageContextWithOptions(croppedRect.size, false, 1)
-    
-    let cornerRadius = configuration.figure == .circle ? width / 2 : 0
-    let roundedRect =  CGRect(origin: .zero, size: croppedRect.size)
-    UIBezierPath(roundedRect: roundedRect, cornerRadius: cornerRadius * image.size.width / bounds.width).addClip()
-    UIImage(cgImage: imageRef, scale: 1, orientation: image.imageOrientation).draw(in: roundedRect)
-    
-    guard let croppedImage = UIGraphicsGetImageFromCurrentImageContext() else {
-      UIGraphicsEndImageContext()
-      return image
-    }
-    
-    UIGraphicsEndImageContext()
-    
-    return croppedImage
+    let croppedImage = UIImage(cgImage: imageRef)
+    return configuration.figure == .circle ? circleMask(for: croppedImage) : croppedImage
+
   }
 
+  func circleMask(for originalImage: UIImage) -> UIImage {
+    
+    let roundedRect =  CGRect(origin: .zero, size: originalImage.size)
+    let path = UIBezierPath(roundedRect: roundedRect, cornerRadius: originalImage.size.width / 2)
+    UIGraphicsBeginImageContextWithOptions(originalImage.size, false, 0)
+    path.addClip()
+    originalImage.draw(at: .zero)
+    let maskedImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    return maskedImage ?? originalImage
+  }
+  
 }
 
 extension CGRect {
@@ -381,6 +352,29 @@ extension ImageCropperConfiguration.ImageCropperFigureType {
 }
 
 
-//extension ImageCropperConfiguration.ImageCropperFigureType where Self.rawValue == ImageCropperConfiguration.ImageCropperFigureType.custom  {
-//
-//}
+extension CGSize {
+  func scale(to size: CGSize) -> CGSize {
+    var newWidth: CGFloat
+    var newHeight: CGFloat
+    
+    if width > height {
+      newHeight = size.height
+      newWidth = newHeight * width / height
+    } else if width < height {
+      newWidth = size.width
+      newHeight = newWidth * height / width
+    } else {
+      newHeight = max(size.width, size.height)
+      newWidth = newHeight
+    }
+    
+    if newHeight < size.height {
+      newHeight = size.height
+      newWidth = newHeight * width / height
+    } else if newWidth < size.width {
+      newWidth = size.width
+      newHeight = newWidth * height / width
+    }
+    return CGSize(width: newWidth, height: newHeight) //??  .zero
+  }
+}

@@ -4,12 +4,15 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageCropperViewController" customModule="ImageCropperTest" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageCropperViewController" customModule="ImageCropper" customModuleProvider="target">
             <connections>
+                <outlet property="activity" destination="Jr4-wj-Hhv" id="7U4-1O-B0q"/>
+                <outlet property="activityView" destination="AMM-D9-k5x" id="gI8-WF-bsE"/>
                 <outlet property="bottomBar" destination="63x-BF-RmK" id="EF4-YP-1yn"/>
                 <outlet property="btnCancel" destination="VHd-ut-ccF" id="bTR-If-Cvz"/>
                 <outlet property="btnDone" destination="0j0-Zj-OEJ" id="Ziv-i0-RfL"/>
@@ -86,16 +89,33 @@
                         <constraint firstAttribute="bottom" secondItem="0j0-Zj-OEJ" secondAttribute="bottom" constant="6" id="oi0-E3-nnM"/>
                     </constraints>
                 </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMM-D9-k5x">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Jr4-wj-Hhv">
+                            <rect key="frame" x="169" y="387.66666666666669" width="37" height="37"/>
+                        </activityIndicatorView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.302734375" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Jr4-wj-Hhv" firstAttribute="centerX" secondItem="AMM-D9-k5x" secondAttribute="centerX" id="HyA-pH-gAe"/>
+                        <constraint firstItem="Jr4-wj-Hhv" firstAttribute="centerY" secondItem="AMM-D9-k5x" secondAttribute="centerY" id="ziu-w6-YM3"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <gestureRecognizers/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="AMM-D9-k5x" secondAttribute="bottom" id="CE9-FS-pbl"/>
                 <constraint firstItem="63x-BF-RmK" firstAttribute="bottom" secondItem="x8u-Y6-sc7" secondAttribute="bottom" id="FMC-2I-1RG"/>
+                <constraint firstItem="AMM-D9-k5x" firstAttribute="leading" secondItem="x8u-Y6-sc7" secondAttribute="leading" id="HIs-ef-7Lr"/>
                 <constraint firstItem="exc-01-ERC" firstAttribute="leading" secondItem="x8u-Y6-sc7" secondAttribute="leading" id="Lrc-3F-SeZ"/>
+                <constraint firstAttribute="trailing" secondItem="AMM-D9-k5x" secondAttribute="trailing" id="XOf-Qw-98r"/>
                 <constraint firstItem="Kte-m8-dND" firstAttribute="top" secondItem="x8u-Y6-sc7" secondAttribute="top" id="alZ-iJ-XpH"/>
                 <constraint firstItem="63x-BF-RmK" firstAttribute="trailing" secondItem="x8u-Y6-sc7" secondAttribute="trailing" id="art-5s-hqZ"/>
                 <constraint firstItem="exc-01-ERC" firstAttribute="top" secondItem="x8u-Y6-sc7" secondAttribute="top" id="g04-5g-IUE"/>
                 <constraint firstItem="Kte-m8-dND" firstAttribute="trailing" secondItem="x8u-Y6-sc7" secondAttribute="trailing" id="i8T-ds-MrC"/>
+                <constraint firstItem="AMM-D9-k5x" firstAttribute="top" secondItem="x8u-Y6-sc7" secondAttribute="top" id="lKh-kG-oOR"/>
                 <constraint firstItem="exc-01-ERC" firstAttribute="trailing" secondItem="x8u-Y6-sc7" secondAttribute="trailing" id="rKu-fi-p6q"/>
                 <constraint firstItem="Kte-m8-dND" firstAttribute="leading" secondItem="x8u-Y6-sc7" secondAttribute="leading" id="rmA-2L-6us"/>
                 <constraint firstItem="exc-01-ERC" firstAttribute="bottom" secondItem="x8u-Y6-sc7" secondAttribute="bottom" id="v17-wV-dIa"/>

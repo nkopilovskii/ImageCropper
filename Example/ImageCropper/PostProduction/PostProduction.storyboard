@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Jfa-QU-WzI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Jfa-QU-WzI">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -13,12 +13,12 @@
         <!--Post Production View Controller-->
         <scene sceneID="KnA-hv-4Zm">
             <objects>
-                <viewController id="Jfa-QU-WzI" customClass="PostProductionViewController" customModule="ImageCropperTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Jfa-QU-WzI" customClass="PostProductionViewController" customModule="ImageCropper_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TDH-VI-RSA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bIQ-4s-BDd">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bIQ-4s-BDd">
                                 <rect key="frame" x="16" y="36" width="343" height="545"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
@@ -46,14 +46,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="EBR-QC-FBu" firstAttribute="top" secondItem="bIQ-4s-BDd" secondAttribute="bottom" constant="36" id="1Ek-95-fGP"/>
+                            <constraint firstItem="EBR-QC-FBu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="bIQ-4s-BDd" secondAttribute="bottom" constant="36" id="1Ek-95-fGP"/>
                             <constraint firstItem="yao-mI-hjF" firstAttribute="bottom" secondItem="SYd-cf-5Ob" secondAttribute="bottom" constant="20" id="DMv-EL-Ev0"/>
                             <constraint firstItem="EBR-QC-FBu" firstAttribute="leading" secondItem="yao-mI-hjF" secondAttribute="leading" constant="16" id="Gz9-cg-Zr0"/>
                             <constraint firstItem="yao-mI-hjF" firstAttribute="trailing" secondItem="SYd-cf-5Ob" secondAttribute="trailing" constant="16" id="Jcu-SH-VN4"/>
-                            <constraint firstItem="bIQ-4s-BDd" firstAttribute="leading" secondItem="yao-mI-hjF" secondAttribute="leading" constant="16" id="TVd-Ir-1TB"/>
-                            <constraint firstItem="yao-mI-hjF" firstAttribute="trailing" secondItem="bIQ-4s-BDd" secondAttribute="trailing" constant="16" id="Xlr-27-fuy"/>
+                            <constraint firstItem="bIQ-4s-BDd" firstAttribute="centerY" secondItem="TDH-VI-RSA" secondAttribute="centerY" id="QA3-EY-ihT"/>
+                            <constraint firstItem="bIQ-4s-BDd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yao-mI-hjF" secondAttribute="leading" constant="16" id="TVd-Ir-1TB"/>
+                            <constraint firstItem="yao-mI-hjF" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bIQ-4s-BDd" secondAttribute="trailing" constant="16" id="Xlr-27-fuy"/>
                             <constraint firstItem="yao-mI-hjF" firstAttribute="bottom" secondItem="EBR-QC-FBu" secondAttribute="bottom" constant="20" id="eoR-ut-JJS"/>
-                            <constraint firstItem="bIQ-4s-BDd" firstAttribute="top" secondItem="yao-mI-hjF" secondAttribute="top" constant="16" id="pIk-hb-iYT"/>
+                            <constraint firstItem="bIQ-4s-BDd" firstAttribute="top" relation="greaterThanOrEqual" secondItem="yao-mI-hjF" secondAttribute="top" constant="16" id="pIk-hb-iYT"/>
+                            <constraint firstItem="bIQ-4s-BDd" firstAttribute="centerX" secondItem="TDH-VI-RSA" secondAttribute="centerX" id="zJa-sh-lma"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yao-mI-hjF"/>
                     </view>

@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ImageCropper'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'Module for implementing the process of cropping images'
 
 # This description is used to generate tags and improve search results.
@@ -37,7 +37,7 @@ This solution presents itself a module developed on the basis of MVP + Clean Arc
   # s.social_media_url = 'https://twitter.com/MKopilovskii'
   s.ios.deployment_target = '10.0'
 
-  s.swift_version  = '4.0'
+  s.swift_version  = '3.0'
   s.source_files = 'ImageCropper/Classes/**/*.{xib,swift}'
   
   # s.resource_bundles = {
