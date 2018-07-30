@@ -45,11 +45,11 @@ extension MainViewController: MainView {
 //MARK: - UIImagePickerControllerDelegate
 extension MainViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-    guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+    guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage, let imageData = UIImagePNGRepresentation(image) else {
       return
     }
     imgPreview.image = image
-    presenter?.didSelect(UIImagePNGRepresentation(image)!)
+    presenter?.didSelect(imageData)
   }
 }
 

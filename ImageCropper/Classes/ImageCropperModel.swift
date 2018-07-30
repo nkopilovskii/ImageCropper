@@ -81,66 +81,19 @@ extension ImageCropperModelImplementation: ImageCropperModel {
   var grid: [CGPath] {
     guard configuration.showGrid else { return [CGPath]() }
     guard let frame = figureFrame else { return [CGPath]() }
-    let size = frame.width / CGFloat(configuration.figure.gridUnitDevider())
+    let step = configuration.figure == .customRect ? 0 : frame.width / CGFloat(configuration.figure.gridUnitDevider())
     let parentFrame = self.parentFrame
     
     var lines = [CGPath]()
 
-    /*
-     drawin vertical grid lines left from figure origin
-     */
-    var benchmark = frame.origin
-    while benchmark.x > 0 {
-      benchmark = CGPoint(x: benchmark.x - size, y: benchmark.y)
-    
-      let linePath = UIBezierPath()
-      linePath.move(to: CGPoint(x: benchmark.x, y: 0))
-      linePath.addLine(to: CGPoint(x: benchmark.x, y: parentFrame.height))
-      
-      lines.append(linePath.cgPath)
-    }
-    
-    /*
-     drawin vertical grid lines right from figure origin
-     */
-    benchmark = CGPoint(x: frame.origin.x - size, y: benchmark.y)
-    while benchmark.x < parentFrame.width {
-      benchmark = CGPoint(x: benchmark.x + size, y: benchmark.y)
-      
-      let linePath = UIBezierPath()
-      linePath.move(to: CGPoint(x: benchmark.x, y: 0))
-      linePath.addLine(to: CGPoint(x: benchmark.x, y: parentFrame.height))
-      
-      lines.append(linePath.cgPath)
-    }
-    
-    /*
-     drawin horizontal grid lines up from figure origin
-     */
-    benchmark = frame.origin
-    while benchmark.y > 0 {
-      benchmark = CGPoint(x: benchmark.x, y: benchmark.y - size)
-      
-      let linePath = UIBezierPath()
-      linePath.move(to: CGPoint(x: 0, y: benchmark.y))
-      linePath.addLine(to: CGPoint(x: parentFrame.width, y: benchmark.y))
-      
-      lines.append(linePath.cgPath)
-    }
-    
-    /*
-     drawin vertical grid lines down from figure origin
-     */
-    benchmark = CGPoint(x: frame.origin.x, y: benchmark.y - size)
-    while benchmark.y < parentFrame.height {
-      benchmark = CGPoint(x: benchmark.x, y: benchmark.y + size)
-      
-      let linePath = UIBezierPath()
-      linePath.move(to: CGPoint(x: 0, y: benchmark.y))
-      linePath.addLine(to: CGPoint(x: parentFrame.width, y: benchmark.y))
-      
-      lines.append(linePath.cgPath)
-    }
+    /* drawin horizontal grid lines up from figure origin */
+    lines.append(contentsOf: NKGridBuilder.up.lines(from: frame.origin, in: parentFrame, with: step))
+    /* drawin vertical grid lines down from figure origin */
+    lines.append(contentsOf: NKGridBuilder.down.lines(from: frame.origin, in: parentFrame, with: step))
+    /* drawin vertical grid lines left from figure origin */
+    lines.append(contentsOf: NKGridBuilder.left.lines(from: frame.origin, in: parentFrame, with: step))
+    /* drawin vertical grid lines right from figure origin */
+    lines.append(contentsOf: NKGridBuilder.right.lines(from: frame.origin, in: parentFrame, with: step))
 
     return lines
   }
@@ -349,8 +302,54 @@ extension ImageCropperConfiguration.ImageCropperFigureType {
 //      fatalError()
     }
   }
+  
 }
 
+
+fileprivate enum NKGridBuilder {
+  case up, down, left, right
+  
+  private func delta(with step: CGFloat) -> CGPoint {
+    switch self {
+    case .up: return CGPoint(x: 0, y: -step)
+    case .down: return CGPoint(x: 0, y: step)
+    case .left: return CGPoint(x: -step, y: 0)
+    case .right: return CGPoint(x: step, y: 0)
+    }
+  }
+  
+  private func lineStart(for point: CGPoint) -> CGPoint {
+    switch self {
+    case .up, .down: return CGPoint(x: 0, y: point.y)
+    case .left, .right: return CGPoint(x: point.x, y: 0)
+    }
+  }
+  
+  private func lineEnd(for point: CGPoint, in size: CGSize) -> CGPoint {
+    switch self {
+    case .up, .down: return CGPoint(x: size.width, y: point.y)
+    case .left, .right: return CGPoint(x: point.x, y: size.height)
+    }
+  }
+  
+  func lines(from point: CGPoint, in bounds: CGRect, with step: CGFloat) -> [CGPath] {
+    guard step > 0 else { return [] }
+    var lines = [CGPath]()
+    let deltaPoint = delta(with: step)
+    var benchmark = self == .up || self == .left ? CGPoint(x: point.x + deltaPoint.x, y: point.y + deltaPoint.y) : point
+    
+    while bounds.contains(benchmark) {
+      let linePath = UIBezierPath()
+      linePath.move(to: lineStart(for: benchmark))
+      linePath.addLine(to: lineEnd(for: benchmark, in: bounds.size))
+      lines.append(linePath.cgPath)
+      
+      benchmark = CGPoint(x: benchmark.x + deltaPoint.x, y: benchmark.y + deltaPoint.y)
+    }
+    
+    return lines
+  }
+}
 
 extension CGSize {
   func scale(to size: CGSize) -> CGSize {
