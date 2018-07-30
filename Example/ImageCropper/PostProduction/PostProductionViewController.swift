@@ -40,23 +40,3 @@ class PostProductionViewController: UIViewController {
 extension PostProductionViewController: PostProductionView {
   
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

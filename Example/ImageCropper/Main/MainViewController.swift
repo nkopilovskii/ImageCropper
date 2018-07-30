@@ -26,14 +26,13 @@ class MainViewController: UIViewController {
     presenter?.cropFigure(sender.tag)
   }
   
-  @IBAction func btnGetImagePressed(_ sender: Any) {
+  @IBAction func btnGetImagePressed(_ sender: UIButton) {
     presenter?.getImage()
   }
   
 }
 
 //MARK: - MainView
-
 extension MainViewController: MainView {
   func isBtnsFiguresEnable(_ enable: Bool) {
     btnsFigures.forEach { btn in
@@ -52,21 +51,3 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
     presenter?.didSelect(UIImagePNGRepresentation(image)!)
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

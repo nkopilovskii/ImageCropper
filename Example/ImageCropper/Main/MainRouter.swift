@@ -11,24 +11,22 @@ import UIKit
 import ImageCropper
 
 class MainRouterImplementation: NSObject {
-
+  
   private weak var view: MainViewController?
   private var imagePicker: UIImagePickerController?
   
   init(for view: MainViewController) {
     self.view = view
   }
-
+  
 }
 
 //MARK: - MainRouter
 
 extension MainRouterImplementation: MainRouter {
-
+  
   func openPhotoLibrary() {
-    guard let vc = view else {
-      return
-    }
+    guard let vc = view else { return }
     
     imagePicker = UIImagePickerController()
     imagePicker?.modalPresentationStyle = .popover
@@ -39,19 +37,13 @@ extension MainRouterImplementation: MainRouter {
   }
   
   func closePhotoLibrary() {
-    guard let picker = imagePicker else {
-      return
-    }
-    
+    guard let picker = imagePicker else { return }
     picker.dismiss(animated: true)
   }
   
   func openCropper(with figure: ImageCropperConfiguration.ImageCropperFigureType, image: Data) {
-    guard let img = UIImage(data: image) else {
-      return
-    }
+    guard let img = UIImage(data: image) else { return }
     var config = ImageCropperConfiguration(with: img, and: figure)
-
     
     config.showGrid = true
     if figure == .customRect {
@@ -60,7 +52,6 @@ extension MainRouterImplementation: MainRouter {
     
     config.backTintColor = .black
     config.backTitle = ""
-    
     
     var croppedImage = img
     let cropper = ImageCropperViewController.initialize(with: config, completionHandler: { _croppedImage in
@@ -81,16 +72,15 @@ extension MainRouterImplementation: MainRouter {
     alert.addAction(ok)
     view?.present(alert, animated: true, completion: nil)
     return
-
+    
   }
   
   func openPostProduction(with image:UIImage) {
-    guard let result = UIStoryboard(name: "PostProduction", bundle: nil).instantiateInitialViewController() as? PostProductionViewController else {
-      return
-    }
+    guard let result = UIStoryboard(name: "PostProduction", bundle: nil).instantiateInitialViewController() as? PostProductionViewController else { return}
     
     result.image = image
     view?.navigationController?.pushViewController(result, animated: true)
   }
+  
 }
 
