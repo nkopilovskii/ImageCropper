@@ -16,7 +16,7 @@ protocol ImageCropperView: class {
   func clearMask()
   func drawMask(by path: CGPath, with fillColor: UIColor)
   func clearBorderAndGrid()
-  func drawBorber(by path: CGPath, with strokeColor: CGColor)
+  func drawBorber(by path: CGPath, with strokeColor: CGColor,lineWidth : CGFloat)
   func drawAnotherBorder(by path: CGPath, with strokeColor: CGColor)
   func drawGrid(with lines: [CGPath], with strokeColor: CGColor)
   
@@ -115,7 +115,8 @@ extension ImageCropperPresenterImplementation: ImageCropperPresenter {
     model.parentFrame = frame
     view?.setImageFrame(model.imageInitialFrame)
     view?.drawMask(by: model.mask, with: model.fillColor)
-    view?.drawBorber(by: model.border, with: model.borderColor)
+//    model.anotherBorderColor// is use for side corners and border setup
+    view?.drawBorber(by: model.border, with: model.borderColor,lineWidth : (model.anotherBorderColor == UIColor.clear.cgColor ? 4 : 1))
     view?.drawAnotherBorder(by: model.anotherBorder, with: model.anotherBorderColor)
     view?.drawGrid(with: model.grid, with: model.gridColor)
     view?.setDone(model.doneTitle)

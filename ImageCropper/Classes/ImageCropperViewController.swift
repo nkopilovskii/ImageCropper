@@ -177,16 +177,16 @@ extension ImageCropperViewController: ImageCropperView {
     })
   }
   
-  func drawBorber(by path: CGPath, with strokeColor: CGColor) {
+    func drawBorber(by path: CGPath, with strokeColor: CGColor,lineWidth  : CGFloat) {
         let border = CAShapeLayer()
         border.frame = grid.bounds
         border.path = path
         border.fillColor = UIColor.clear.cgColor
         border.strokeColor = strokeColor
-        border.lineWidth = 1
+        border.lineWidth = lineWidth
         grid.layer.addSublayer(border)
   }
-  
+    
     //This is for create lines on the sides
     func drawAnotherBorder(by path: CGPath, with strokeColor: CGColor){
         let border = CAShapeLayer()
