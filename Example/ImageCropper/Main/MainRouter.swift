@@ -45,11 +45,15 @@ extension MainRouterImplementation: MainRouter {
     guard let img = UIImage(data: image) else { return }
     var config = ImageCropperConfiguration(with: img, and: figure)
     
-    config.showGrid = true
+    config.showGrid = false
     if figure == .customRect {
       config.customRatio = CGSize(width: 6, height: 5)
     }
     
+    if figure == .circle
+    {
+      config.anotherBorderColor = UIColor.clear//this is for hide corners
+    }
     config.backTintColor = .black
     config.backTitle = ""
     

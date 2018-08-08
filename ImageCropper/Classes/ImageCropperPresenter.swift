@@ -16,7 +16,8 @@ protocol ImageCropperView: class {
   func clearMask()
   func drawMask(by path: CGPath, with fillColor: UIColor)
   func clearBorderAndGrid()
-  func drawBorber(by path: CGPath, with strokeColor: CGColor)
+  func drawBorber(by path: CGPath, with strokeColor: CGColor,lineWidth : CGFloat)
+  func drawAnotherBorder(by path: CGPath, with strokeColor: CGColor)
   func drawGrid(with lines: [CGPath], with strokeColor: CGColor)
   
   func setDone(_ title: String?)
@@ -58,6 +59,10 @@ protocol ImageCropperModel {
   var border: CGPath { get }
   var borderColor: CGColor { get }
   
+    //this is for custom
+    var anotherBorder: CGPath { get }
+    var anotherBorderColor: CGColor { get }
+    
   var grid: [CGPath] { get }
   var gridColor: CGColor { get }
   
@@ -108,10 +113,11 @@ extension ImageCropperPresenterImplementation: ImageCropperPresenter {
     view?.clearBorderAndGrid()
     
     model.parentFrame = frame
-    
     view?.setImageFrame(model.imageInitialFrame)
     view?.drawMask(by: model.mask, with: model.fillColor)
-    view?.drawBorber(by: model.border, with: model.borderColor)
+//    model.anotherBorderColor// is use for side corners and border setup
+    view?.drawBorber(by: model.border, with: model.borderColor,lineWidth : (model.anotherBorderColor == UIColor.clear.cgColor ? 4 : 1))
+    view?.drawAnotherBorder(by: model.anotherBorder, with: model.anotherBorderColor)
     view?.drawGrid(with: model.grid, with: model.gridColor)
     view?.setDone(model.doneTitle)
     view?.setCancel(model.cancelTitle)

@@ -36,10 +36,12 @@ public struct ImageCropperConfiguration {
   public var doneTitle: String?
   public var cancelTitle: String?
   
+  public var topTitle: String?
   public var backTitle: String?
   public var backImage: UIImage?
   public var backTintColor: UIColor?
-  
+  public var anotherBorderColor: UIColor?
+  public var showCornerWithBorderWidth : Bool = false
   
   public init(with image: UIImage, and figure: ImageCropperFigureType) {
     self.image = image.normalizeOrientation()
