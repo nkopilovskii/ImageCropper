@@ -66,14 +66,55 @@ extension ImageCropperModelImplementation: ImageCropperModel {
       return configuration.maskFillColor ?? UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
   }
-  
+    var anotherBorder : CGPath
+    {
+        guard let frame = figureFrame else {
+            return UIBezierPath(rect: .zero).cgPath
+        }
+        
+        let bez = UIBezierPath()
+        bez.lineWidth = 1
+        bez.move(to: CGPoint(x: frame.origin.x, y: frame.origin.y + 30))
+        bez.addLine(to: CGPoint(x: frame.origin.x, y: frame.origin.y))
+        bez.addLine(to: CGPoint(x: frame.origin.x + 30, y: frame.origin.y))
+        bez.move(to: CGPoint(x: frame.maxX - 30 , y: frame.origin.y))
+        bez.addLine(to: CGPoint(x: frame.maxX , y: frame.origin.y))
+        bez.addLine(to: CGPoint(x: frame.maxX , y: frame.origin.y + 30))
+        bez.move(to: CGPoint(x: frame.maxX , y: frame.maxY - 30))
+        bez.addLine(to: CGPoint(x: frame.maxX , y: frame.maxY))
+        bez.addLine(to: CGPoint(x: frame.maxX - 30 , y: frame.maxY))
+        bez.move(to: CGPoint(x: frame.origin.x + 30 , y: frame.maxY))
+        bez.addLine(to: CGPoint(x: frame.origin.x , y: frame.maxY))
+        bez.addLine(to: CGPoint(x: frame.origin.x , y: frame.maxY - 30))
+        return bez.cgPath
+    }
+    
+    var anotherBorderColor: CGColor {
+        return configuration.anotherBorderColor?.cgColor ?? UIColor.lightGray.cgColor
+    }
+    
   var border: CGPath {
     guard let frame = figureFrame else {
       return UIBezierPath(rect: .zero).cgPath
     }
-    return UIBezierPath(roundedRect: frame, cornerRadius: configuration.figure == .circle ? frame.width / 2 : 1.0).cgPath
+//    return UIBezierPath(roundedRect: frame, cornerRadius: configuration.figure == .circle ? frame.width / 2 : 1.0).cgPath
+    
+    if configuration.figure == .circle
+    {
+        return /*bez.cgPath */UIBezierPath(roundedRect: frame, cornerRadius: 75).cgPath
+    }
+    else
+    {
+        return /*bez.cgPath */UIBezierPath(roundedRect: frame, cornerRadius: 0).cgPath
+    }
+    
   }
   
+    var showCornerWithBorderWidth : Bool
+    {
+        return configuration.showCornerWithBorderWidth
+    }
+    
   var borderColor: CGColor {
     return configuration.borderColor?.cgColor ?? UIColor.lightGray.cgColor
   }
@@ -118,6 +159,10 @@ extension ImageCropperModelImplementation: ImageCropperModel {
     return configuration.backTitle
   }
   
+    var topTitle: String? {
+        return configuration.topTitle
+    }
+    
   var backImage: UIImage? {
     return configuration.backImage
   }
@@ -191,22 +236,39 @@ extension ImageCropperModelImplementation: ImageCropperModel {
   }
   
   func crop() -> UIImage {
-    guard let borders = figureFrame else {
-      return image
+    guard let bounds = parentRect, let borders = figureFrame else {
+        return image
     }
-    let point = CGPoint(x: borders.origin.x - imageFrame.origin.x, y: borders.origin.y - imageFrame.origin.y)
-    let frame = CGRect(origin: point, size: borders.size)
+    
+    let frame = CGRect(origin: CGPoint(x: borders.origin.x - imageFrame.origin.x, y: borders.origin.y - imageFrame.origin.y), size: borders.size)
     let x = frame.origin.x * image.size.width / imageFrame.width
     let y = frame.origin.y * image.size.height / imageFrame.height
     let width = frame.width * image.size.width / imageFrame.width
     let height = frame.height * image.size.height / imageFrame.height
     let croppedRect = CGRect(x: x, y: y, width: width, height: height)
+    
     guard let imageRef = image.cgImage?.cropping(to: croppedRect) else {
-      return image
+        return image
     }
     
-    let croppedImage = UIImage(cgImage: imageRef)
-    return configuration.figure == .circle ? circleMask(for: croppedImage) : croppedImage
+    UIGraphicsBeginImageContextWithOptions(croppedRect.size, false, 1)
+    
+    let cornerRadius = configuration.figure == .circle ? 75.0 : 0.0
+    
+    let roundedRect =  CGRect(origin: .zero, size: croppedRect.size)
+    UIBezierPath(roundedRect: roundedRect, cornerRadius: CGFloat(cornerRadius)).addClip()
+    UIImage(cgImage: imageRef, scale: 1, orientation: image.imageOrientation).draw(in: roundedRect)
+    
+    guard let croppedImage = UIGraphicsGetImageFromCurrentImageContext() else {
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
+    UIGraphicsEndImageContext()
+    
+    return croppedImage
+//    let croppedImage = UIImage(cgImage: imageRef)
+//    return configuration.figure == .circle ? circleMask(for: croppedImage) : croppedImage
 
   }
 
