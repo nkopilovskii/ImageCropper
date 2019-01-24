@@ -72,7 +72,7 @@ This library provides the ability to cut out sections of the original image in s
     
 **Fixed:**
 
-- pinch gesture issue (thanks [davidpaul0880] (https://github.com/davidpaul0880) for help)
+- pinch gesture issue (thanks [davidpaul0880](https://github.com/davidpaul0880) for help)
 
 
 ## Usage Example
