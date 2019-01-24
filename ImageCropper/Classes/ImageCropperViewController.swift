@@ -53,11 +53,6 @@ public class ImageCropperViewController: UIViewController {
     super.viewDidLayoutSubviews()
     presenter?.viewDidLayoutSubviews(in: view.bounds)
   }
-  
-//  override public var prefersStatusBarHidden: Bool {
-//    return true
-//  }
-  
 }
 
 //MARK: - Private
@@ -151,16 +146,13 @@ extension ImageCropperViewController: ImageCropperView {
     let hole = CAShapeLayer()
     hole.frame = mask.bounds
     hole.path = path
-//    hole.fillColor = fillColor
     hole.fillRule = kCAFillRuleEvenOdd
     mask.layer.mask = hole
     mask.backgroundColor = fillColor
   }
   
   func clearBorderAndGrid() {
-    grid.layer.sublayers?.forEach({ (sublayer) in
-      sublayer.removeFromSuperlayer()
-    })
+    grid.layer.sublayers?.forEach({ $0.removeFromSuperlayer() })
   }
   
   func drawBorber(by path: CGPath, with strokeColor: CGColor) {
@@ -174,9 +166,9 @@ extension ImageCropperViewController: ImageCropperView {
   }
   
   func drawGrid(with lines: [CGPath], with strokeColor: CGColor) {
-    lines.forEach { line in
+    lines.forEach {
       let lineLayer = CAShapeLayer()
-      lineLayer.path = line
+      lineLayer.path = $0
       lineLayer.fillColor = nil
       lineLayer.opacity = 1
       lineLayer.lineWidth = 1

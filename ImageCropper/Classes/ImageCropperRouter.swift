@@ -31,11 +31,11 @@ class ImageCropperRouterImplementation {
 extension ImageCropperRouterImplementation: ImageCropperRouter {
   func finish(with croppedImage: UIImage) {
     self.completionHandler(croppedImage)
-    if let dis = dismiss {  dis() }
+    if let dismiss = dismiss { dismiss() }
   }
   
   func cancel() {
-    guard let dis = dismiss else {
+    guard let dismiss = dismiss else {
       guard let navigationController = view?.navigationController else {
         view?.dismiss(animated: true, completion: nil)
         return
@@ -44,7 +44,7 @@ extension ImageCropperRouterImplementation: ImageCropperRouter {
       return
     }
     
-    dis()
+    dismiss()
   }
   
   

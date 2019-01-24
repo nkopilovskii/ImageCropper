@@ -16,6 +16,9 @@ class ImageCropperModelImplementation  {
   fileprivate var imageFrame = CGRect.zero
   fileprivate var gridSize:CGFloat?
   
+  fileprivate var cornerRadius = CGFloat(0)
+  
+  
   init(with configuration: ImageCropperConfiguration) {
     self.configuration = configuration
   }
@@ -37,6 +40,7 @@ extension ImageCropperModelImplementation: ImageCropperModel {
       
       let figureSize = configuration.figure.maskSize(with: newValue.size, ratio: configuration.customRatio)
       figureFrame = CGRect(x: (newValue.width - figureSize.width) / 2, y: (newValue.height - figureSize.height) / 2, width: figureSize.width, height: figureSize.height)
+      cornerRadius =  min(figureSize.width, figureSize.height) / 2 * configuration.cornerRadius
       
       imageFrame = imageInitialFrame
     }
@@ -68,10 +72,8 @@ extension ImageCropperModelImplementation: ImageCropperModel {
   }
   
   var border: CGPath {
-    guard let frame = figureFrame else {
-      return UIBezierPath(rect: .zero).cgPath
-    }
-    return UIBezierPath(roundedRect: frame, cornerRadius: configuration.figure == .circle ? frame.width / 2 : 1.0).cgPath
+    guard let frame = figureFrame else { return UIBezierPath(rect: .zero).cgPath }
+    return UIBezierPath(roundedRect: frame, cornerRadius: cornerRadius != 0 ? cornerRadius : 1.0).cgPath
   }
   
   var borderColor: CGColor {
@@ -206,21 +208,22 @@ extension ImageCropperModelImplementation: ImageCropperModel {
     }
     
     let croppedImage = UIImage(cgImage: imageRef)
-    return configuration.figure == .circle ? circleMask(for: croppedImage) : croppedImage
+    return configuration.cornerRadius != 0 ? cutCorners(for: croppedImage) : croppedImage
 
   }
-
-  func circleMask(for originalImage: UIImage) -> UIImage {
+  
+  func cutCorners(for originalImage: UIImage) -> UIImage {
+    let imgRect = CGRect(origin: .zero, size: originalImage.size)
+    let cornerRadius = min(imgRect.width, imgRect.height) / 2 * configuration.cornerRadius
+    let path = UIBezierPath(roundedRect: imgRect, cornerRadius: cornerRadius)
     
-    let roundedRect =  CGRect(origin: .zero, size: originalImage.size)
-    let path = UIBezierPath(roundedRect: roundedRect, cornerRadius: originalImage.size.width / 2)
     UIGraphicsBeginImageContextWithOptions(originalImage.size, false, 0)
     path.addClip()
     originalImage.draw(at: .zero)
-    let maskedImage = UIGraphicsGetImageFromCurrentImageContext()
+    let croppedImage = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     
-    return maskedImage ?? originalImage
+    return croppedImage ?? originalImage
   }
   
 }

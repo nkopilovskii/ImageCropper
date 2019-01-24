@@ -25,8 +25,21 @@ public struct ImageCropperConfiguration {
   
   var image: UIImage
   var figure: ImageCropperFigureType
+  /**
+   The parameter indicates the radius of the corners with respect to half the length of the smaller side of the rectangle.
+   
+   If input value greather 1, *cornerRadius == 1*
+   
+   If input value less 0, *cornerRadius == fabsf(inputValue)*
+   
+   If *figure == circle*, *cornerRadius == 1*
+   
+   default: 0
+   */
+  var cornerRadius: CGFloat
   
   public var customRatio: CGSize?
+  
   
   public var maskFillColor: UIColor?
   public var borderColor: UIColor?
@@ -41,9 +54,19 @@ public struct ImageCropperConfiguration {
   public var backTintColor: UIColor?
   
   
-  public init(with image: UIImage, and figure: ImageCropperFigureType) {
+  public init(with image: UIImage, and figure: ImageCropperFigureType, cornerRadius: CGFloat? = nil) {
     self.image = image.normalizeOrientation()
     self.figure = figure
+    
+    switch figure {
+    case .circle: self.cornerRadius = 1
+    default:
+      guard let radius = cornerRadius else {
+        self.cornerRadius = 0
+        return
+      }
+      self.cornerRadius =  radius > 1 ? 1 : CGFloat(fabsf(Float(radius)))
+    }
   }
   
 }

@@ -11,6 +11,7 @@ import Foundation
 import ImageCropper
 
 protocol MainView: class {
+  var cornerRadius: CGFloat? { get }
   func isBtnsFiguresEnable(_ enable:Bool)
 }
 
@@ -26,7 +27,7 @@ protocol MainPresenter {
 protocol MainRouter {
   func openPhotoLibrary()
   func closePhotoLibrary()
-  func openCropper(with figure: ImageCropperConfiguration.ImageCropperFigureType, image: Data)
+  func openCropper(with figure: ImageCropperConfiguration.ImageCropperFigureType, image: Data, cornerRadius: CGFloat?)
   func showAlertNoImage()
 }
 
@@ -74,6 +75,6 @@ extension MainPresenterImplementation: MainPresenter {
       router.showAlertNoImage()
       return
     }
-    router.openCropper(with: figure, image: img)
+    router.openCropper(with: figure, image: img, cornerRadius: view?.cornerRadius)
   }
 }
