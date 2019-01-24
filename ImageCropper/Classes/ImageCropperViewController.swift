@@ -83,19 +83,14 @@ extension ImageCropperViewController {
   }
   
   @IBAction func actionPinch(_ sender: UIPinchGestureRecognizer) {
-    
     switch sender.state {
     case .began:
       guard sender.numberOfTouches >= 2 else { return }
       presenter?.userInteraction(true)
-      
-      pinchStartDistance = distance(from: sender.location(ofTouch: 0, in: grid), to: sender.location(ofTouch: 1, in: grid))
+      presenter?.didPinchStarted()
     case .changed:
       guard sender.numberOfTouches >= 2 else { return }
-      let realDistance = distance(from: sender.location(ofTouch: 0, in: grid), to: sender.location(ofTouch: 1, in: grid))
-      let scaleDistance = (realDistance - pinchStartDistance) / 10 + pinchStartDistance
-      presenter?.didScale(with: scaleDistance / pinchStartDistance)
-      
+      presenter?.didScale(with: sender.scale)
     case .ended, .cancelled:
       presenter?.userInteraction(false)
     default:

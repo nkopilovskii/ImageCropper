@@ -32,10 +32,11 @@ protocol ImageCropperPresenter {
   
   func viewDidLoad()
   func viewDidLayoutSubviews(in frame: CGRect)
-  
   func userInteraction(_ takesPlace: Bool)
   func didDrag(to location: CGPoint)
+  func didPinchStarted()
   func didScale(with scale: CGFloat)
+  
   func centerImage()
   
   func crop()
@@ -69,6 +70,7 @@ protocol ImageCropperModel {
   var backTintColor: UIColor? { get }
   
   func draggingFrame(for point: CGPoint) -> CGRect
+  func setStartedPinch()
   func scalingFrame(for scale: CGFloat) -> CGRect
   func transformatingFinished()
   func centerFrame() -> CGRect
@@ -126,6 +128,10 @@ extension ImageCropperPresenterImplementation: ImageCropperPresenter {
   
   func didDrag(to location: CGPoint) {
     view?.setImageFrame(model.draggingFrame(for: location))
+  }
+  
+  func didPinchStarted() {
+    model.setStartedPinch()
   }
   
   func didScale(with scale: CGFloat) {

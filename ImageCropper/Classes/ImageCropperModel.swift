@@ -11,6 +11,8 @@ class ImageCropperModelImplementation  {
   
   fileprivate var parentRect: CGRect?
   
+  fileprivate var initialSize: CGSize?
+  
   fileprivate var figureFrame: CGRect?
   fileprivate var panLastLocation: CGPoint?
   fileprivate var imageFrame = CGRect.zero
@@ -145,17 +147,26 @@ extension ImageCropperModelImplementation: ImageCropperModel {
     return imageFrame
   }
   
+  func setStartedPinch() {
+    initialSize = CGSize(width: imageFrame.width, height: imageFrame.height)
+  }
+  
   func scalingFrame(for scale: CGFloat) -> CGRect {
     let borders = figureFrame ?? .zero
-    var newSize = CGSize(width: imageFrame.width * scale, height: imageFrame.height * scale)
+    let pinchStartSize: CGSize
+    if initialSize == nil {
+      pinchStartSize = CGSize(width: imageFrame.width, height: imageFrame.height)
+    } else {
+      pinchStartSize = initialSize!
+    }
+    var newSize = CGSize(width: pinchStartSize.width * scale, height: pinchStartSize.height * scale)
     
     if newSize.width < borders.width || newSize.height < borders.height {
-        newSize = image.size.scale(to: borders.size)
+      newSize = image.size.scale(to: borders.size)
     }
-    
     var newX = imageFrame.origin.x - (newSize.width - imageFrame.width) / 2
     var newY = imageFrame.origin.y - (newSize.height - imageFrame.height) / 2
-   
+    
     if newX + newSize.width <= borders.maxX {
       newX = borders.maxX - newSize.width
     }
@@ -173,7 +184,7 @@ extension ImageCropperModelImplementation: ImageCropperModel {
     if newSize.width / image.size.width < 2 || newSize.height / image.size.height < 2  {
       imageFrame = CGRect(origin: CGPoint(x: newX, y: newY), size: newSize)
     }
-
+    
     return imageFrame
   }
   
