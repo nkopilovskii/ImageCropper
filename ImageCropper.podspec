@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ImageCropper'
-  s.version          = '0.1.3.1'
+  s.version          = '0.1.4'
   s.summary          = 'Module for implementing the process of cropping images'
 
 # This description is used to generate tags and improve search results.
@@ -30,7 +30,7 @@ This solution presents itself a module developed on the basis of MVP + Clean Arc
                        DESC
 
   s.homepage         = 'https://github.com/nkopilovskii/ImageCropper'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.screenshots      = 'https://github.com/nkopilovskii/ImageCropper/ImageCropper.png'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Nick Kopilovskii' => 'nkopilovskii@gmail.com' }
   s.source           = { :git => 'https://github.com/nkopilovskii/ImageCropper.git', :tag => s.version.to_s }
