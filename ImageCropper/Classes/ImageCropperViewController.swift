@@ -141,7 +141,7 @@ extension ImageCropperViewController: ImageCropperView {
     let hole = CAShapeLayer()
     hole.frame = mask.bounds
     hole.path = path
-    hole.fillRule = kCAFillRuleEvenOdd
+    hole.fillRule = CAShapeLayerFillRule.evenOdd
     mask.layer.mask = hole
     mask.backgroundColor = fillColor
   }
