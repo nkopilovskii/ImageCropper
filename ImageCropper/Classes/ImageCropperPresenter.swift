@@ -86,6 +86,8 @@ class ImageCropperPresenterImplementation {
   fileprivate let router: ImageCropperRouter
   
   fileprivate var model: ImageCropperModel
+    
+    var initial: Bool = false
   
   //MARK: -
   
@@ -109,9 +111,11 @@ extension ImageCropperPresenterImplementation: ImageCropperPresenter {
     view?.clearMask()
     view?.clearBorderAndGrid()
     
-    model.parentFrame = frame
-    
-    view?.setImageFrame(model.imageInitialFrame)
+    if !initial {
+        model.parentFrame = frame
+        view?.setImageFrame(model.imageInitialFrame)
+        initial = true
+    }
     view?.drawMask(by: model.mask, with: model.fillColor)
     view?.drawBorber(by: model.border, with: model.borderColor)
     view?.drawGrid(with: model.grid, with: model.gridColor)
