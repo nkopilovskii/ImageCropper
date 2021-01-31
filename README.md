@@ -75,6 +75,11 @@ This library provides the ability to cut out sections of the original image in s
 - pinch gesture issue (thanks [davidpaul0880](https://github.com/davidpaul0880) for help)
 
 
+### v.0.1.5
+**Added:**
+
+- Swift 5 support
+
 ## Usage Example
 
 ### Module Initialization
