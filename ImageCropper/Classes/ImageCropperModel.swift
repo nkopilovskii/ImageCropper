@@ -41,7 +41,7 @@ extension ImageCropperModelImplementation: ImageCropperModel {
       parentRect = newValue
       
       let figureSize = configuration.figure.maskSize(with: newValue.size, ratio: configuration.customRatio)
-      figureFrame = CGRect(x: (newValue.width - figureSize.width) / 2, y: (newValue.height - figureSize.height) / 2, width: figureSize.width, height: figureSize.height)
+      figureFrame = CGRect(x: 0 / 2, y: (newValue.height - figureSize.height) / 2, width: figureSize.width + 100, height: figureSize.height)
       cornerRadius =  min(figureSize.width, figureSize.height) / 2 * configuration.cornerRadius
       
       imageFrame = imageInitialFrame

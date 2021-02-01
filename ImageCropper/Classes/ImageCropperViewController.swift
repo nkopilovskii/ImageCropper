@@ -60,10 +60,12 @@ public class ImageCropperViewController: UIViewController {
 extension ImageCropperViewController {
   @IBAction func btnCancelPressed(_ sender: UIButton) {
     presenter?.cancel()
+    self.dismiss(animated: true, completion: nil)
   }
   
   @IBAction func btnDonePressed(_ sender: UIButton) {
     presenter?.crop()
+    self.dismiss(animated: true, completion: nil)
   }
   
   @IBAction func actionPan(_ sender: UIPanGestureRecognizer) {
@@ -103,7 +105,7 @@ extension ImageCropperViewController {
   }
   
   @IBAction func actionDoubleTap(_ sender: UITapGestureRecognizer) {
-    presenter?.centerImage()
+//    presenter?.centerImage()
   }
   
   func distance(from first: CGPoint, to second: CGPoint) -> CGFloat {
